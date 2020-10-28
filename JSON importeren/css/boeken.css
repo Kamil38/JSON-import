@@ -12,3 +12,7 @@ body {
     padding: 0 3rem 0 0;
     max-width: 300px;
 }
+
+.boek__paginas::after, .boek__uitgave::after, .boek__ean::after {
+    content: " | ";
+}
