@@ -17,7 +17,15 @@ const boeken = {
     uitvoeren() {
         let html = "";
         this.data.forEach( boek => {
-            html += `<h3>${boek.titel}</h3>`
+
+            //in het geval van een voortitel moet deze voor de titel worden geplaatst
+            let titel = "";
+            if(boek.voortitel ) {
+                titel += boek.voortitel + " ";
+            }
+            titel += boek.titel;
+
+            html += `<h3>${titel}</h3>`
         });
         uitvoer.innerHTML = html
     }
