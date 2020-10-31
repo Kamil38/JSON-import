@@ -4,7 +4,7 @@ const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = () => {
     if(xhr.readyState == 4 && xhr.status == 200) {
         let resultaat = JSON.parse(xhr.responseText);
-        boeken.data = resultaat
+        boeken.filteren(resultaat);
         boeken.uitvoeren();
     }
 }
@@ -12,6 +12,13 @@ xhr.open('GET', 'boekenKamil.json', true);
 xhr.send();
 
 const boeken = {
+
+    taalFilter: 'Nederlands',
+
+    //filteren op taal
+    filteren( gegevens ) {
+        this.data = gegevens.filter( (bk) => { return bk.taal == this.taalFilter} );
+    },
 
     //er wordt hier een eigenschap data aangemaakt (regel 7)
     uitvoeren() {
