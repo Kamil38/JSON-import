@@ -27,3 +27,7 @@ body {
     font-size: 2em;
     color: royalblue;
 }
+
+.besturing__select--label {
+    float: right;
+}
