@@ -28,6 +28,7 @@ body {
     color: royalblue;
 }
 
-.besturing__select--label {
+.besturing__sorteren {
     float: right;
+    text-align: right;
 }
