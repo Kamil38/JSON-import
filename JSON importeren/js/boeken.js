@@ -78,6 +78,38 @@ const ww = {
         document.getElementById('uitvoer').innerHTML = html;
         aantalInWinkelwagen.innerHTML = totaalBesteld;
         this.trashActiveren();
+        this.hogerLagerActiveren();
+    },
+
+    hogerLagerActiveren() {
+        //verhogen
+        let hogerKnoppen = document.querySelectorAll('.bestelformulier__verhoog');
+        hogerKnoppen.forEach( knop => {
+            knop.addEventListener('click', e => {
+                let ophoogID = e.target.getAttribute('data-role');
+                let opTeHogenBoek = this.bestelling.filter( boek => boek.ean == ophoogID );
+                opTeHogenBoek[0].besteldAantal ++;
+                localStorage.wwBestelling = JSON.stringify(this.bestelling);
+                this.uitvoeren();
+            })
+        })
+        
+        //verlagen
+        let lagerKnoppen = document.querySelectorAll('.bestelformulier__verlaag');
+        lagerKnoppen.forEach( knop => {
+            knop.addEventListener('click', e => {
+                let verlaagID = e.target.getAttribute('data-role');
+                let teVerlagenAantal = this.bestelling.filter( boek => boek.ean == verlaagID );
+                if (teVerlagenAantal[0].besteldAantal > 1) {
+                    teVerlagenAantal[0].besteldAantal --;
+                } else {
+                    //boek verwijderen
+                    this.bestelling = this.bestelling.filter( bk => bk.ean != verlaagID);
+                }
+                localStorage.wwBestelling = JSON.stringify(this.bestelling);
+                this.uitvoeren();
+            })
+        })
     },
 
     trashActiveren() {
