@@ -1,11 +1,13 @@
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    overflow-x: hidden;
 }
 
 .ww {
     position: absolute;
-    right: 4em;
+    right: 13em;
     top: 2em;
+    cursor: pointer;
 }
 
 .ww__icon {
