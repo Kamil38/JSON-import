@@ -27,9 +27,12 @@ const ww = {
     boekToevoegen(obj) {
         let gevonden = this.bestelling.filter( b => b.ean == obj );
         if ( gevonden.length == 0 ) {
+            obj.besteldAantal ++;
             ww.bestelling.push(obj);
+        }else{
+            gevonden[0].besteldAantal ++;
         }
-        aantalInWinkelwagen.innerHTML = this.bestelling.length;
+        
         localStorage.wwBestelling = JSON.stringify(this.bestelling);
         this.uitvoeren();
     },
@@ -46,6 +49,7 @@ const ww = {
 
         let html = '<table>';
         let totaal = 0;
+        let totaalBesteld = 0;
         this.bestelling.forEach( boek => {
             let completeTitel = "";
             if(boek.voortitel ) {
@@ -56,17 +60,19 @@ const ww = {
             html += '<tr>';
             html += `<td><img src="${boek.cover}" alt="${completeTitel}" class="bestelformulier__cover"><td>`;
             html += `<td>${completeTitel}</td>`;
+            html += `<td>${boek.besteldAantal}</td>`;
             html += `<td>${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</td>`;
             html += '<tr>';
-            totaal =+ boek.prijs;
+            totaal += boek.prijs * boek.besteldAantal;
+            totaalBesteld += boek.besteldAantal;
         });
 
-        html += `<tr><td colspan="3">Totaal</td>
-                <td>${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</td>
+        html += `<tr><td colspan="4">Totaal</td>
+                <td>${totaal.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</td>
                 </tr>`;
         html += '</table>';
         document.getElementById('uitvoer').innerHTML = html;
-        aantalInWinkelwagen.innerHTML = ww.bestelling.length;
+        aantalInWinkelwagen.innerHTML = totaalBesteld;
     }
 }
 
@@ -161,7 +167,6 @@ const boeken = {
                 e.preventDefault();
                 let boekID = e.target.getAttribute('data-role');
                 let gekliktBoek = this.data.filter( b => b.ean == boekID );
-                gekliktBoek[0].besteldAantal ++;
                 ww.boekToevoegen(gekliktBoek[0]);
             })
         });
