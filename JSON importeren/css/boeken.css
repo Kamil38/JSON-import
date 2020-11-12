@@ -121,3 +121,7 @@ body {
     transform: translateX(100vw);
     transition: transform 1s ease-out;
 }
+
+.bestelformulier__cover {
+    height: 3em;
+}
