@@ -29,7 +29,7 @@ const ww = {
         if ( gevonden.length == 0 ) {
             obj.besteldAantal ++;
             ww.bestelling.push(obj);
-        }else{
+        } else{
             gevonden[0].besteldAantal ++;
         }
         
@@ -56,12 +56,13 @@ const ww = {
                 completeTitel += boek.voortitel + " ";
             }
             completeTitel += boek.titel;
-
+            //opbouwen string <i class="fas fa-trash"></i>
             html += '<tr>';
             html += `<td><img src="${boek.cover}" alt="${completeTitel}" class="bestelformulier__cover"><td>`;
             html += `<td>${completeTitel}</td>`;
             html += `<td>${boek.besteldAantal}</td>`;
             html += `<td>${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</td>`;
+            html += `<td><i class="fas fa-trash bestelformulier__trash" data-role="${boek.ean}"></i></td>`;
             html += '<tr>';
             totaal += boek.prijs * boek.besteldAantal;
             totaalBesteld += boek.besteldAantal;
@@ -73,6 +74,19 @@ const ww = {
         html += '</table>';
         document.getElementById('uitvoer').innerHTML = html;
         aantalInWinkelwagen.innerHTML = totaalBesteld;
+        this.trashActiveren();
+    },
+
+    trashActiveren() {
+        document.querySelectorAll('.bestelformulier__trash').forEach( trash => {
+            trash.addEventListener('click', e => {
+                let teVerwijderenBoekID = e.target.getAttribute('data-role');
+                this.bestelling = this.bestelling.filter( bk => bk.ean != teVerwijderenBoekID );
+                // local storage bijwerken 
+                localStorage.wwBestelling = JSON.stringify(this.bestelling);
+                this.uitvoeren();
+            })
+        })
     }
 }
 
