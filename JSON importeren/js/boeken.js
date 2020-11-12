@@ -25,7 +25,9 @@ const ww = {
     bestelling: []
 }
 
-ww.bestelling = JSON.parse(localStorage.wwBestelling);
+if (localStorage.wwBestelling) {
+    ww.bestelling = JSON.parse(localStorage.wwBestelling);
+}
 aantalInWinkelwagen.innerHTML = ww.bestelling.length;
 
 //object boeken
