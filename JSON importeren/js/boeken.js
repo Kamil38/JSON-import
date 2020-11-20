@@ -25,7 +25,7 @@ const ww = {
     bestelling: [],
 
     boekToevoegen(obj) {
-        let gevonden = this.bestelling.filter( b => b.ean == obj );
+        let gevonden = this.bestelling.filter( b => b.ean == obj.ean );
         if ( gevonden.length == 0 ) {
             obj.besteldAantal ++;
             ww.bestelling.push(obj);
